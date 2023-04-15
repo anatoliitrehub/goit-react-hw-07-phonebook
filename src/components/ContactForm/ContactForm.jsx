@@ -2,32 +2,37 @@
 import { useState } from 'react';
 import st from './Contactform.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from 'redux/contactsSlice';
+import { addUser } from 'redux/operations';
+// import { addUser } from 'redux/contactsSlice';
 // import { addUser } from 'redux/actions';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 
 export const ContactForm = () => {
  const dispatch = useDispatch();
- const contacts = useSelector(state=>state.contacts)
+ const {items,isLoading, error} = useSelector(state=>state.contacts)
 
   const [name,setName] = useState('')
-  const [number,setNumber] = useState('')
+  const [phone,setPhone] = useState('')
 
   const handleAddUser = e => {
     e.preventDefault();
-    if (contacts.find(el => el.name.toLowerCase() === name.toLowerCase())||
-    contacts.find(el => el.number === number)) {
-      Notify.failure(`${name} or ${number} is already in contacts`);
+    if (items.find(el => el.name.toLowerCase() === name.toLowerCase())||
+    items.find(el => el.phone === phone)) {
+      Notify.failure(`${name} or ${phone} is already in contacts`);
       return;
     }
     // addUser({name,number});
-    dispatch(addUser({name,number}));
+    dispatch(addUser({name,phone}));
+    !error&&!isLoading&&
     Notify.success(`Contact ${name} has been added`);
+    if(error){
+      Notify.failure(`${error}!`);
+      return;};
 
     e.target.reset()
     setName('');
-    setNumber('')
+    setPhone('')
   };
 
   
@@ -54,8 +59,8 @@ export const ContactForm = () => {
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             className={st.number}
-            value={number}
-            onChange={e=>setNumber(e.target.value)}
+            value={phone}
+            onChange={e=>setPhone(e.target.value)}
             required
           />
         </label>
