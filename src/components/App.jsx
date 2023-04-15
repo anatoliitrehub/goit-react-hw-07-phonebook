@@ -6,7 +6,7 @@ import { ContactForm } from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 import { useEffect } from 'react';
-import { fetchContacts } from 'redux/operations';
+import { fetchAll } from 'redux/operations';
 
 
 export const App = () => {
@@ -14,7 +14,7 @@ export const App = () => {
   const {isLoading,error} = useSelector(state=>state.contacts);
 
   useEffect(()=>{
-    dispatch(fetchContacts())
+    dispatch(fetchAll())
   },[dispatch]);
 
    return (

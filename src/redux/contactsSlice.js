@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 // import { initContacts } from './constants';
 // import sid from 'shortid';
-import { fetchContacts,addUser,removeUser } from './operations';
+import { fetchAll,addContact,deleteContact } from './operations';
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -14,20 +14,17 @@ const contactsSlice = createSlice({
   // .addCase(addUser.pending,(state)=>{
   //   state.isLoading=true
   // })
-   .addCase(addUser.fulfilled, (state, { payload }) => {
+   .addCase(addContact.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.items.push(payload);
    state.error=null;
   })
-  .addCase(addUser.rejected,(state,{payload})=>{
-    state.isLoading=false;
-    state.error=payload;
-  })
-  .addCase(fetchContacts.fulfilled,(state,{payload})=>{
+  
+  .addCase(fetchAll.fulfilled,(state,{payload})=>{
     state.isLoading=false;
     state.items = payload
   })
-  .addCase(removeUser.fulfilled,(state,{payload})=>{
+  .addCase(deleteContact.fulfilled,(state,{payload})=>{
     state.isLoading=false;
     state.items=state.items.filter(el=>el.id!==payload)
   })

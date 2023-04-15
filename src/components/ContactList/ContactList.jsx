@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import st from './Contactlist.module.css';
 import PropTypes from 'prop-types';
 // import { removeUser } from 'redux/contactsSlice';
-import { removeUser } from 'redux/operations';
+import { deleteContact} from 'redux/operations';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 
@@ -11,7 +11,7 @@ const ContactList = () => {
   const filter = useSelector(state=>state.filter);
   const dispatch = useDispatch();
   const handlerRemove = (id) =>{
-    dispatch(removeUser(id));
+    dispatch(deleteContact(id));
     setTimeout(()=>!error&&!isLoading&&Notify.success('Contact has been removed'),500)
     
     error&&Notify.failure(`${error}!`);

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import st from './Contactform.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from 'redux/operations';
+import { addContact } from 'redux/operations';
 // import { addUser } from 'redux/contactsSlice';
 // import { addUser } from 'redux/actions';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
@@ -23,7 +23,7 @@ export const ContactForm = () => {
       return;
     }
     // addUser({name,number});
-    dispatch(addUser({name,phone}));
+    dispatch(addContact({name,phone}));
     !error&&!isLoading&&
     Notify.success(`Contact ${name} has been added`);
     if(error){
